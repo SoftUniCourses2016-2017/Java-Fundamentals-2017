@@ -1,35 +1,31 @@
-import org.omg.CORBA.INTERNAL;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
-/**
- * Created by Magdalena on 22.1.2017 г..
- */
 public class GameOfNames {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int n = Integer.parseInt(scanner.nextLine());
-        for (int i = 0; i < n; i++) {
-            String[] participantsAndPoints = scanner.nextLine().split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-            String[] participants = new String[participantsAndPoints.length / 2];
-            int[] points = new int[participantsAndPoints.length / 2];
+        int count = Integer.parseInt(scanner.nextLine());
 
-            participants[i] = participantsAndPoints[i];
-            points[i] = Integer.parseInt(participantsAndPoints[i + 1]);
+        int maxScore = Integer.MIN_VALUE;
+        String winner = "";
 
-            for (String participant :
-                    participants) {
-                System.out.println(participant);
+        for (int i = 0; i < count; i++) {
+            char[] name = scanner.nextLine().toCharArray();
+            int score = Integer.parseInt(scanner.nextLine());
+
+            for (char character : name) {
+                if (character % 2 == 0) {
+                    score += character;
+                } else {
+                    score -= character;
+                }
             }
-            for (int point :
-                    points) {
-                System.out.println(point);
+
+            if (score > maxScore) {
+                maxScore = score;
+                winner = new String(name);
             }
-
-
         }
+
+        System.out.printf("The winner is %s - %d points", winner, maxScore);
     }
 }
